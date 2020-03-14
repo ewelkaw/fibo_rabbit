@@ -107,3 +107,4 @@ venv.bak/
 __pycache__/
 
 .vscode
+db/products.db

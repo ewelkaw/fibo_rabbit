@@ -70,7 +70,7 @@ def post_sequence():
             rabbit_connector.send(json.dumps({"number": number}))
             logger.info("Request has been sent to the queue")
             return Response(
-                '{"success": "Request will be proccessed"}',
+                '{"success": "Request will be processed"}',
                 headers={"Content-Type": "application/json"},
                 status=202,
             )
@@ -81,3 +81,8 @@ def post_sequence():
             headers={"Content-Type": "application/json"},
             status=400,
         )
+
+
+@app.route("/api/fibo", methods=["GET"])
+def healthcheck():
+    return Response(status=204)
