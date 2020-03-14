@@ -1,0 +1,42 @@
+version: '3'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - "5000:5000"
+    links:
+      - rabbit
+    volumes:
+      - ./db:/app/db
+    environment:
+      - RABBIT_HOST=rabbit
+    command: ["./wait-for-it.sh", "rabbit:5672", "--", "flask", "run"]
+  generator:
+    build:
+      context: .
+      dockerfile: generator/Dockerfile
+    links:
+      - rabbit
+    volumes:
+      - ./db:/app/db
+    environment:
+        - RABBIT_HOST=rabbit
+    command: ["./wait-for-it.sh", "rabbit:5672", "--", "python", "generator.py"]
+  processor:
+    build:
+      context: .
+      dockerfile: processor/Dockerfile
+    links:
+      - rabbit
+    volumes:
+      - ./db:/app/db
+    environment:
+      - RABBIT_HOST=rabbit
+    command: ["./wait-for-it.sh", "rabbit:5672", "--", "python", "processor.py"]
+  rabbit: 
+    image: "rabbitmq:3.8.3"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
