@@ -9,11 +9,20 @@ jobs:
     steps:
       - checkout
       - python/load-cache
-      - python/install-deps
-      - python/save-cache
       - run:
-          command: ./manage.py test
-          name: Test
+          name: Install deps
+          command: pip install -r tests/requirements-tests.txt
+      - python/save-cache
+      - setup_remote_docker
+      - run:
+          name: Start container and verify it is working
+          command: |
+            set -x
+            docker-compose up -d
+      - run:
+          name: Test  
+          command: python3 tests/tests.py
+            
 
 workflows:
   main:

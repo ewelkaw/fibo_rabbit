@@ -9,7 +9,7 @@ class TestUnitTest(unittest.TestCase):
         self.base_url = os.getenv("BASE_TEST_URL", "http://localhost:5000/api/fibo")
         counter = 0
         connected = False
-        while counter < 30 and not connected:
+        while counter < 240 and not connected:
             try:
                 requests.request("GET", self.base_url)
                 connected = True
