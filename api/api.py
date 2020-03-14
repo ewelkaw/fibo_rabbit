@@ -81,8 +81,3 @@ def post_sequence():
             headers={"Content-Type": "application/json"},
             status=400,
         )
-
-
-@app.route("/api/fibo", methods=["GET"])
-def healthcheck():
-    return Response(status=204)
