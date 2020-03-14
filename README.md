@@ -57,3 +57,7 @@ header:
 Content-Type: application/json
 Accept: application/json
 ```
+
+## 3. Tests
+
+Tests are prepared for CircleCI.

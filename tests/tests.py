@@ -7,17 +7,6 @@ import os
 class TestUnitTest(unittest.TestCase):
     def setUp(self):
         self.base_url = os.getenv("BASE_TEST_URL", "http://localhost:5000/api/fibo")
-        counter = 0
-        connected = False
-        while counter < 30 and not connected:
-            try:
-                requests.request("GET", self.base_url)
-                connected = True
-            except requests.exceptions.ConnectionError:
-                counter = counter + 1
-                time.sleep(1)
-        if not connected:
-            raise Exception("Unable to connect to docker-compose stack")
 
     def test_get_not_calculated(self):
         headers = {"Content-Type": "application/json", "Accept": "application/json"}
@@ -93,7 +82,4 @@ class TestUnitTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    if os.getenv("CI") != "true":
-        print("This script is supposed to be running only on the CI env")
-    else:
-        unittest.main()
+    unittest.main()
